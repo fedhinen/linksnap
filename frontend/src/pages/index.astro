@@ -1,0 +1,35 @@
+---
+import Features from "../components/Features.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Navigation from "../components/Navigation.astro";
+import Roadmap from "../components/Roadmap.astro";
+import Stack from "../components/Stack.astro";
+import SideLayout from "../layout/SiteLayout.astro";
+---
+
+<SideLayout title="Short Url">
+    <main
+        class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-x-hidden"
+    >
+        <!-- Navigation -->
+        <Navigation />
+
+        <!-- Hero Section -->
+        <section class="pt-32 pb-20 px-6">
+            <Hero />
+
+            <!-- Features Section -->
+            <Features />
+
+            <!-- Tech Stack -->
+            <Stack />
+
+            <!-- Roadmap Section -->
+            <Roadmap />
+
+            <!-- Footer -->
+            <Footer />
+        </section>
+    </main>
+</SideLayout>

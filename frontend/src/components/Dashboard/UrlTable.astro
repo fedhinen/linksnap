@@ -1,0 +1,75 @@
+---
+import api from "../../utils/api";
+
+const baseUrl = new URL(Astro.request.url).origin;
+
+const token = Astro.locals.authToken;
+
+if (!token) {
+    return new Response(null, { status: 302, headers: { Location: "/" } });
+}
+
+let data: any[] = [];
+
+try {
+    const response = await api("shorturl/")({
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+    }
+
+    data = await response.json();
+} catch (err) {
+    console.error("Failed to fetch short URLs:", err);
+}
+---
+
+<section
+    class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-md overflow-x-auto"
+>
+    <table class="w-full table-auto text-left">
+        <thead class="bg-white/10 text-sm uppercase text-gray-400">
+            <tr>
+                <th class="px-6 py-4">Id</th>
+                <th class="px-6 py-4">Url Original</th>
+                <th class="px-6 py-4">Url Corta</th>
+                <th class="px-6 py-4 text-right">Creado el</th>
+            </tr>
+        </thead>
+        <tbody class="text-sm text-gray-700 divide-y divide-white/10">
+            {
+                data.map((url) => (
+                    <tr class="hover:bg-white/5 transition-colors">
+                        <td class="px-6 py-4 font-mono">{url.id}</td>
+                        <td class="px-6 py-4">
+                            <a
+                                href={url.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {url.url}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a
+                                href={`${baseUrl}/s/${url.code}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {`${baseUrl}/s/${url.code}`}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 text-right space-x-2">
+                            {new Date(url.created_at).toLocaleString()}
+                        </td>
+                    </tr>
+                ))
+            }
+        </tbody>
+    </table>
+</section>

@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.2.2",
+    "@clerk/astro": "^2.8.2",
+    "@tailwindcss/vite": "^4.1.8",
+    "astro": "^5.8.1",
+    "ky": "^1.8.1",
+    "tailwindcss": "^4.1.8"
+  }
+}

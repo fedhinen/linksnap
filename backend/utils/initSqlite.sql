@@ -1,0 +1,17 @@
+CREATE TABLE ShortUrl (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    url TEXT NOT NULL,
+    code TEXT NOT NULL UNIQUE,
+    user_id TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
+);
+
+CREATE TABLE Analytics (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    short_url_id INTEGER NOT NULL,
+    ip_address TEXT NOT NULL,
+    user_agent TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (short_url_id) REFERENCES ShortUrl (id)
+);

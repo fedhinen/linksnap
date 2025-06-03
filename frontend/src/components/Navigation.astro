@@ -1,0 +1,51 @@
+---
+import { SignedIn, SignedOut, SignInButton } from "@clerk/astro/components";
+---
+
+<nav
+    class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10"
+>
+    <div class="max-w-6xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
+                >
+                    <span class="text-white font-bold text-sm">S</span>
+                </div>
+                <span
+                    class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+                    >Snap</span
+                >
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a
+                    href="#features"
+                    class="hover:text-blue-400 transition-colors"
+                    >Características</a
+                >
+                <a href="#tech" class="hover:text-blue-400 transition-colors"
+                    >Tecnología</a
+                >
+                <a href="#roadmap" class="hover:text-blue-400 transition-colors"
+                    >Roadmap</a
+                >
+            </div>
+            <SignedOut>
+                <SignInButton
+                    class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+                >
+                    Comenzar
+                </SignInButton>
+            </SignedOut>
+            <SignedIn>
+                <a
+                    href="/dashboard"
+                    class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+                >
+                    Dashboard
+                </a>
+            </SignedIn>
+        </div>
+    </div>
+</nav>

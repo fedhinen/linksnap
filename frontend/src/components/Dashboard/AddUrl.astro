@@ -1,0 +1,22 @@
+<div class="flex justify-center my-4">
+    <section class="w-full max-w-md bg-white shadow-sm rounded-2xl p-6">
+        <h2 class="text-2xl font-semibold text-center mb-4">
+            Agregar nueva URL
+        </h2>
+        <form method="POST" action="/api/urls" class="space-y-4">
+            <input
+                type="url"
+                name="url"
+                placeholder="https://ejemplo.com"
+                required
+                class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+                type="submit"
+                class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+            >
+                Agregar URL
+            </button>
+        </form>
+    </section>
+</div>
