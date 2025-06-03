@@ -1,0 +1,13 @@
+bun.lock
+
+.env
+
+.astro
+
+.vscode
+
+node_modules
+
+*.db
+
+go.sum
