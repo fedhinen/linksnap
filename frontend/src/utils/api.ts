@@ -6,6 +6,7 @@ export const BASE_URL =
 const api = (path: string): ((options?: RequestInit) => Promise<Response>) => {
   const sanitizedPath = path.replace(/^\/+/, "");
   return (options?: RequestInit) => {
+    console.log({ url: `${BASE_URL}/${sanitizedPath}`, options });
     return fetch(`${BASE_URL}/${sanitizedPath}`, options);
   };
 };
