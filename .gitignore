@@ -9,5 +9,3 @@ bun.lock
 node_modules
 
 *.db
-
-go.sum

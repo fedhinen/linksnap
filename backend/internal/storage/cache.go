@@ -3,7 +3,6 @@ package storage
 import (
 	"context"
 	"linksnap/internal/config"
-	"os"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -12,8 +11,9 @@ var RedisClient *redis.Client
 
 func InitializeRedis(env *config.Env) (*redis.Client, error) {
 	RedisClient = redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_ADDRESS"),  // "localhost:6379"
-		Password: os.Getenv("REDIS_PASSWORD"), // opcional
+		Addr:     env.RedisURL,      // "localhost:6379"
+		Password: env.RedisPassword, // opcional
+		Username: env.RedisUsername,
 		DB:       0,
 	})
 
