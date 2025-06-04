@@ -26,11 +26,13 @@ func (h *ShortUrlHandler) ShortURLHandler(w http.ResponseWriter, r *http.Request
 
 	userId, err := auth.GetAuthenticatedUserID(r.Context())
 	if err != nil {
+		fmt.Println("Error getting authenticated user ID:", err)
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	if userId == "" {
+		fmt.Println("User ID not found")
 		http.Error(w, "User ID not found", http.StatusUnauthorized)
 		return
 	}
@@ -88,6 +90,7 @@ func (h *ShortUrlHandler) GetShortURL(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Method:", method)
 
 	if method != http.MethodGet {
+		fmt.Println("Method not allowed")
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
