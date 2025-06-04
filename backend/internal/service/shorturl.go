@@ -28,7 +28,12 @@ func (s *ShortUrlService) ListUrlsByUserID(userID string) []*models.ShortUrl {
 }
 
 func (s *ShortUrlService) CreateUrl(userId string, url string) (*models.ShortUrl, error) {
-	// Generar codigo unico
+	urls := s.store.ListUrlsByUserID(userId)
+
+	if len(urls) >= 10 {
+		return nil, fmt.Errorf("Maximo de urls alcanzado")
+	}
+
 	code, err := util.GenerateRandomCode(10)
 	if err != nil {
 		return nil, err

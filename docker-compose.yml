@@ -26,6 +26,8 @@ services:
       - database
       - valkey
     env_file: ./backend/.env
+    environment:
+      PORT: 8080
     networks:
       - app-network
 
@@ -37,7 +39,8 @@ services:
       - "traefik.http.routers.frontend.rule=Host(`localhost`)"
       - "traefik.http.services.frontend.loadbalancer.server.port=3000"
     env_file: ./frontend/.env
-
+    environment:
+      PORT: 3000
     networks:
       - app-network
 
