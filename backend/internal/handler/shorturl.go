@@ -18,7 +18,11 @@ func NewURLHandler(service *service.ShortUrlService) *ShortUrlHandler {
 }
 
 func (h *ShortUrlHandler) ShortURLHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Received request /api/shorturl")
+
 	method := r.Method
+
+	fmt.Println("Method:", method)
 
 	userId, err := auth.GetAuthenticatedUserID(r.Context())
 	if err != nil {
@@ -77,7 +81,11 @@ func (h *ShortUrlHandler) ShortURLHandler(w http.ResponseWriter, r *http.Request
 }
 
 func (h *ShortUrlHandler) GetShortURL(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Received GET request /api/s/:code")
+
 	method := r.Method
+
+	fmt.Println("Method:", method)
 
 	if method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
