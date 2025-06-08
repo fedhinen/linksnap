@@ -18,6 +18,6 @@ COPY --from=builder /app/package*.json ./
 
 RUN npm install --omit=dev
 
-EXPOSE 3000
+EXPOSE $PORT
 
 CMD ["node", "./dist/server/entry.mjs"]
