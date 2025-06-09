@@ -55,14 +55,29 @@ try {
                                 {url.url}
                             </a>
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 flex items-center gap-2">
                             <a
                                 href={`${baseUrl}/s/${url.code}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                class="truncate max-w-[180px] block"
                             >
                                 {`${baseUrl}/s/${url.code}`}
                             </a>
+                            <button
+                                type="button"
+                                class="text-xs text-blue-500 hover:underline btn-copy"
+                                data-url={`${baseUrl}/s/${url.code}`}
+                            >
+                                Copiar
+                            </button>
+                            <button
+                                type="button"
+                                class="text-xs text-red-500 hover:underline btn-delete"
+                                data-id={url.id}
+                            >
+                                Eliminar
+                            </button>
                         </td>
                         <td class="px-6 py-4 text-right space-x-2">
                             {new Date(url.created_at).toLocaleString()}
@@ -73,3 +88,46 @@ try {
         </tbody>
     </table>
 </section>
+
+<script>
+    // Botones de eliminar
+    const copyBtns = document.querySelectorAll(".btn-copy");
+
+    copyBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            if (!(btn instanceof HTMLElement)) return;
+
+            const url = btn.dataset.url;
+
+            if (!url) return;
+
+            navigator.clipboard.writeText(url).then((c) => {
+                console.log("Copiado en clipboard");
+            });
+        });
+    });
+
+    const deleteBtns = document.querySelectorAll(".btn-delete");
+
+    deleteBtns.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+            if (!(btn instanceof HTMLElement)) return;
+            const id = btn.dataset.id;
+
+            if (!id) return;
+
+            const response = await fetch(`/api/urls/${id}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                throw new Error("Error en la respuesta del servidor");
+            }
+
+            const result = await response.json();
+            if (result.redirect) {
+                window.location.href = result.redirect;
+            }
+        });
+    });
+</script>

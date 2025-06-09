@@ -46,6 +46,10 @@ func (s *ShortUrlService) CreateUrl(userId string, url string) (*models.ShortUrl
 	})
 }
 
+func (s *ShortUrlService) DeleteUrl(userId string, id string) (*models.ShortUrl, error) {
+	return s.store.DeleteUrl(userId, id)
+}
+
 func (s *ShortUrlService) Resolve(ctx context.Context, code string) (string, error) {
 
 	url, err := s.cache.Get(ctx, code).Result()

@@ -37,6 +37,25 @@ func (h *ShortUrlHandler) ShortURLHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	id := strings.TrimPrefix(r.URL.Path, "/api/shorturl/")
+
+	if id != "/api/shorturl/" && method == http.MethodDelete {
+		fmt.Println("Received DELETE request /api/shorturl")
+
+		deletedUrl, err := h.service.DeleteUrl(userId, id)
+		if err != nil {
+			fmt.Println("Error deleting URL:", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		fmt.Println("Deleted URL:", deletedUrl)
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(deletedUrl)
+		return
+	}
+
 	if method == http.MethodPost {
 		fmt.Println("Received POST request /api/shorturl")
 
@@ -82,7 +101,7 @@ func (h *ShortUrlHandler) ShortURLHandler(w http.ResponseWriter, r *http.Request
 	return
 }
 
-func (h *ShortUrlHandler) GetShortURL(w http.ResponseWriter, r *http.Request) {
+func (h *ShortUrlHandler) GetShortURLHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Received GET request /api/s/:code")
 
 	method := r.Method

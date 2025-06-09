@@ -6,4 +6,5 @@ type UrlStore interface {
 	GetUrl(code string) (string, error)
 	CreateUrl(data *models.NewShortUrl) (*models.ShortUrl, error)
 	ListUrlsByUserID(userID string) []*models.ShortUrl
+	DeleteUrl(userId string, id string) (*models.ShortUrl, error)
 }

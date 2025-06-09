@@ -39,7 +39,7 @@ func main() {
 
 	var store storage.UrlStore
 
-	if envs.DatabaseDriver == "sqlite" {
+	if envs.DatabaseDriver == "sqlite3" {
 		store = storage.NewSqliteStore(db)
 	} else if envs.DatabaseDriver == "postgres" {
 		store = storage.NewPostgresStore(db)
@@ -50,7 +50,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/api/s/", urlHandler.GetShortURL)
+	mux.HandleFunc("/api/s/", urlHandler.GetShortURLHandler)
 	mux.HandleFunc("/api/health/", handler.HealthHandler)
 
 	protectedRoute := http.HandlerFunc(urlHandler.ShortURLHandler)

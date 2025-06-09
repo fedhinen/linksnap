@@ -72,3 +72,17 @@ func (s *SqliteStore) ListUrlsByUserID(userID string) []*models.ShortUrl {
 
 	return urls // si todo va bien
 }
+
+func (s *SqliteStore) DeleteUrl(userId string, id string) (*models.ShortUrl, error) {
+	var url models.ShortUrl
+
+	err := s.db.QueryRow(`
+		UPDATE ShortUrl SET deleted_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ? RETURNING id, url, code, created_at
+	`, id, userId).Scan(&url.ID, &url.URL, &url.Code, &url.CreatedAt)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &url, nil
+}

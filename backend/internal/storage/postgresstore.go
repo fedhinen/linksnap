@@ -79,3 +79,18 @@ func (s *PostgresStore) ListUrlsByUserID(userID string) []*models.ShortUrl {
 
 	return urls
 }
+
+func (s *PostgresStore) DeleteUrl(userId string, id string) (*models.ShortUrl, error) {
+	var url models.ShortUrl
+
+	err := s.db.QueryRow(`
+		UPDATE shorturl SET deleted_at = CURRENT_TIMESTAMP WHERE id = $1 AND user_id = $2 RETURNING id, url, code, created_at
+	`, id, userId).Scan(&url.ID, &url.URL, &url.Code, &url.CreatedAt)
+
+	if err != nil {
+		fmt.Println("Error deleting URL:", err)
+		return nil, err
+	}
+
+	return &url, nil
+}
